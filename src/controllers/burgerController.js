@@ -7,6 +7,16 @@ export class BurgerController extends BaseController {
         this.router.get('/menu', this.getBurgers)
         this.router.post('', this.postBurger)
         this.router.delete('/:burgerId', this.deleteBurger)
+        this.router.put('/:burgerId', this.putBurger)
+    }
+
+    async putBurger(request, response, next) {
+        try {
+            const burger = await burgerService.putBurger(request.params.burgerId, request.body)
+            response.send(burger)
+        } catch (error) {
+            next(error)
+        }
     }
 
     async deleteBurger(request, response, next) {

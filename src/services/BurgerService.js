@@ -1,6 +1,19 @@
 import { dbContext } from "../db/DbContext.js";
 
 class BurgerService {
+
+    async putBurger(burgerId, body) {
+        const burger = await dbContext.Burgers.findById(burgerId)
+        if(burger != null) {
+            console.log('burger changed', burger)
+            await burger.updateOne(body)
+            return(burger)
+        }
+        else{
+            throw new console.error('no burger with ID ', burgerId);
+        }
+    }
+
     async deleteBurger(burgerId) {
         const burger = await dbContext.Burgers.findById(burgerId)
         if (burger != null) {
